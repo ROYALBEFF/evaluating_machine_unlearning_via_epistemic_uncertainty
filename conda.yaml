@@ -1,0 +1,16 @@
+name: Evaluating Machine Unlearning via Epistemic Uncertainty
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.9
+  - pip
+  - pytorch==1.10.2
+  - numpy==1.21.2
+  - seaborn==0.11.2
+  - mlflow==1.23.0
+  - torchvision==0.11.3
+  - scikit-learn==1.0.1
+  - matplotlib==3.5.0
+  - adversarial-robustness-toolbox==1.9.1
+  - scipy==1.7.3

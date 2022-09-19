@@ -1,0 +1,63 @@
+name: Evaluating Machine Unlearning via Epistemic Uncertainty
+conda_env: conda.yaml
+
+entry_points:
+  # perform one of the three forgetting algorithms
+  forgetting:
+    parameters:
+      # general parameters
+      seed: float
+      model: string
+      target: float
+      dataset: string
+      percentage: float
+      forgetting: string
+      output: {type: str, default: "."}
+
+      # amnesiac unlearning parameters
+      history: {type: string, default: ""}
+
+      # fisher forgetting parameters
+      alpha: {type: float, default: -1}
+
+      # retraining parameters
+      learning_rate: {type: float, default: -1}
+      epochs: {type: float, default: -1}
+      batch_size: {type: float, default: -1}
+
+    command: "python run_forgetting.py -s {seed} -m {model} -d {dataset} -t {target} -p {percentage} -f {forgetting} -hp {history} -a {alpha} -lr {learning_rate} -e {epochs} -bs {batch_size} -o {output}"
+
+  # train models for further experiments
+  training:
+    parameters:
+      seed: float
+      dataset: string
+      learning_rate: float
+      epochs: float
+      batch_size: float
+      output: {type: str, default: "."}
+
+    command: "python run_training.py -s {seed} -d {dataset} -lr {learning_rate} -e {epochs} -bs {batch_size} -o {output}"
+
+  # attack the pre-trained models
+  attack_pre_trained:
+    parameters:
+      seed: float
+      model: string
+      target: float
+      dataset: string
+      percentage: float
+      output: {type: str, default: "."}
+
+    command: "python run_attack_pre_trained.py -s {seed} -m {model} -d {dataset} -t {target} -p {percentage} -o {output}"
+
+  # compute the efficacy for the just initialized models
+  initial_efficacy:
+    parameters:
+      seed: float
+      target: float
+      percentage: float
+      dataset: string
+      output: {type: str, default: "."}
+
+    command: "python run_initial_efficacy.py -s {seed} -d {dataset} -t {target} -p {percentage} -o {output}"
